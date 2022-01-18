@@ -16,6 +16,10 @@ int main(){
 	cin >> source;
 	
 	// Dijkstra's algorithm begins from here
+	
+	//A PQ configured to store in non-increasing order
+	//Set DS is also an alternative
+	
 	priority_queue<pair<int,int>,vector<pair<int,int> >,greater<pair<int,int> > > pq;// min-heap ; In pair => (dist,from)
 	vector<int> distTo(n+1,INT_MAX); 	// 1-indexed array for calculating shortest paths; 
 	
@@ -27,11 +31,16 @@ int main(){
 		int prev = pq.top().second;
 		pq.pop();
 		
-		vector<pair<int,int> >::iterator it;
-		for( it = g[prev].begin() ; it != g[prev].end() ; it++){
-			int next = it->first;
-			int nextDist = it->second;
+		//vector<pair<int,int> >::iterator it;
+		for(auto it: g[prev]){
+			int next = it.first;
+			int nextDist = it.second;
 			if( distTo[next] > distTo[prev] + nextDist){
+				//If a smaller distance is the found
+				//(A) Update the distance
+				//(B) Push (dis,node) pair into the pq
+				
+				//Multiple instances => No prob => because lesser distance will always be the final result
 				distTo[next] = distTo[prev] + nextDist;
 				pq.push(make_pair(distTo[next], next));
 			}
